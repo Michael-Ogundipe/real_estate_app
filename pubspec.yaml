@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   intl: ^0.20.0
   flutter_animate: ^4.5.0
+  google_maps_flutter: ^2.10.0
+  hooks_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:

@@ -1,22 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../pages/home_page.dart';
+import '../pages/real_estate_map.dart';
+import '../providers/navigation_provider.dart';
 import 'nav_bar_icon.dart';
 
-class BottomNavigation extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  ConsumerState<HomePage> createState() => HomePageState();
+}
+
+class HomePageState extends ConsumerState<HomePage> {
+  static const List<Widget> _pages = <Widget>[
+
+    RealEstateMap(),
+    Icon(
+      Icons.call,
+      size: 150,
+    ),
+    Home(),
+    Icon(
+      Icons.chat,
+      size: 150,
+    ),
+    Icon(
+      Icons.chat,
+      size: 150,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        extendBody: true,
+        body: _pages.elementAt(ref.watch(selectedIndex)),
+        bottomNavigationBar: const BottomNavigation());
+  }
+}
+
+class BottomNavigation extends ConsumerStatefulWidget {
   const BottomNavigation({super.key});
 
   @override
-  State<BottomNavigation> createState() => _BottomNavigationState();
+  ConsumerState<BottomNavigation> createState() => _BottomNavigationState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
-
-  int _selectedIndex = 2;
-
+class _BottomNavigationState extends ConsumerState<BottomNavigation> {
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    ref.read(selectedIndex.notifier).state = index;
   }
 
   @override
@@ -35,12 +69,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
           children: [
             NavBarIcon(
               icon: Icons.search,
-              isSelected: _selectedIndex == 0,
+              isSelected: ref.watch(selectedIndex) == 0,
               onTap: () => _onItemTapped(0),
             ),
             NavBarIcon(
               icon: Icons.chat_bubble_outline,
-              isSelected: _selectedIndex == 1,
+              isSelected: ref.watch(selectedIndex) == 1,
               onTap: () => _onItemTapped(1),
             ),
             // Center home button
@@ -50,7 +84,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: _selectedIndex == 2
+                  color: ref.watch(selectedIndex) == 2
                       ? const Color(0xFFF5A623)
                       : const Color(0xFFF5A623).withOpacity(0.8),
                   shape: BoxShape.circle,
@@ -64,12 +98,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
             NavBarIcon(
               icon: Icons.favorite_border,
-              isSelected: _selectedIndex == 3,
+              isSelected: ref.watch(selectedIndex) == 3,
               onTap: () => _onItemTapped(3),
             ),
             NavBarIcon(
               icon: Icons.person_outline,
-              isSelected: _selectedIndex == 4,
+              isSelected: ref.watch(selectedIndex) == 4,
               onTap: () => _onItemTapped(4),
             ),
           ],

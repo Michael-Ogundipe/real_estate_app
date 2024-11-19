@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:real_estate_app/src/pages/home_page.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'src/widgets/bottom_navigation.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
