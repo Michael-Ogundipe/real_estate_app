@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // For formatting numbers
+import 'package:intl/intl.dart';
 
 class AnimatedCountingText extends StatefulWidget {
   const AnimatedCountingText({

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../widgets/bottom_navigation.dart';
 import '../consts/colors.dart';
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 child: const Row(
                                   children: [
-                                    Icon(Icons.location_on_outlined,
+                                    Icon(Icons.location_on,
                                         color: grayishBrownColor),
                                     SizedBox(width: 8),
                                     Text(
@@ -70,11 +71,17 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ],
                                 ),
+                              ).animate().fadeIn(duration: 500.ms,)
+                                  .slide(
+                                begin: Offset(-1, 0),
+                                end: Offset(0, 0),   
+                                duration: 1000.ms,
                               ),
                               const CircleAvatar(
                                 radius: 25,
                                 child: Icon(Icons.person),
-                              ),
+                              ).animate().fadeIn(duration: 500.ms,) // Fade in effect
+                                  .scale(duration: 1500.ms),
                             ],
                           ),
                           const SizedBox(height: 30),
@@ -102,12 +109,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                      margin: EdgeInsets.only(bottom: 18),
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                      margin: const EdgeInsets.only(bottom: 18),
                       decoration: BoxDecoration(
-                        color: whiteColor,
-                        borderRadius: BorderRadius.circular(32)
-                      ),
+                          color: whiteColor,
+                          borderRadius: BorderRadius.circular(32)),
                       child: ListView(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -131,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                                 child: ListingCard(
                                   address: 'Trefoleva St., 43',
                                   imageUrl:
-                                  'https://a0.muscache.com/im/pictures/miso/Hosting-1045027151296604859/original/e0b6a72a-ff8f-4786-abf2-bd6eab2a05d5.jpeg?im_w=720',
+                                      'https://a0.muscache.com/im/pictures/miso/Hosting-1045027151296604859/original/e0b6a72a-ff8f-4786-abf2-bd6eab2a05d5.jpeg?im_w=720',
                                 ),
                               ),
                             ],

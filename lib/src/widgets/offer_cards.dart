@@ -42,7 +42,6 @@ class OfferCards extends StatelessWidget {
         const SizedBox(width: 20),
         Expanded(
           child: Container(
-            //height: 180,
             padding: const EdgeInsets.only(top: 16, bottom: 36),
             decoration: BoxDecoration(
               color: whiteColor,
