@@ -8,6 +8,9 @@ class AppStyles {
   static TextStyle font12Medium = const TextStyle(
       fontSize: 12, fontWeight: FontWeight.w500, color: whiteColor);
 
+  static TextStyle font16Medium = const TextStyle(
+      fontSize: 16, fontWeight: FontWeight.w500, color: whiteColor);
+
   static TextStyle font32Bold = const TextStyle(
       color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold);
 }

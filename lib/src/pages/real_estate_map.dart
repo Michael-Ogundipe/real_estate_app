@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:real_estate_app/src/consts/app_style.dart';
+
+import '../consts/colors.dart';
 
 class RealEstateMap extends StatefulWidget {
   const RealEstateMap({super.key});
@@ -89,14 +92,70 @@ class _RealEstateMapState extends State<RealEstateMap> {
             ),
           ),
 
+          // Bottom Navigation
+          Positioned(
+            bottom: 96,
+
+            right: 16,
+            child: TextButton(
+              onPressed: () {
+                setState(() => showViewOptions = !showViewOptions);
+              },
+              child: Container(
+                width: 190,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: darkGrayColor.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.menu_sharp, color: whiteColor),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'List of variants',
+                      style: AppStyles.font16Medium,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 104,
+            left: 32,
+            right: 16,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        _buildCircleButton(Icons.layers),
+                        const SizedBox(height: 8),
+                        _buildCircleButton(Icons.navigation),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+
           // View Options Panel
           if (showViewOptions)
             Positioned(
-              bottom: 140,
-              left: 16,
+              bottom: 160,
+              left: 32,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: tanColor,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -117,43 +176,6 @@ class _RealEstateMapState extends State<RealEstateMap> {
                 ),
               ),
             ),
-
-          // Bottom Navigation
-          Positioned(
-            bottom: 96,
-            left: 16,
-            right: 16,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildCircleButton(Icons.layers),
-                    _buildCircleButton(Icons.navigation),
-                    TextButton(
-                      onPressed: () {
-                        setState(() => showViewOptions = !showViewOptions);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[800],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text(
-                          'List of variants',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -186,7 +208,7 @@ class _RealEstateMapState extends State<RealEstateMap> {
   Widget _buildCircleButton(IconData icon) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[700],
+        color: darkGrayColor,
         shape: BoxShape.circle,
       ),
       child: IconButton(
@@ -195,7 +217,6 @@ class _RealEstateMapState extends State<RealEstateMap> {
       ),
     );
   }
-
 
   Set<Marker> _createMarkers() {
     return propertyListings.map((listing) {

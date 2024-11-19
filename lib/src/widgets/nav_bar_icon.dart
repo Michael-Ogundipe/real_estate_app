@@ -18,13 +18,22 @@ class NavBarIcon extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: isSelected
+              ?  orangeColor
+              :  blackColor,
+          shape: BoxShape.circle,
+        ),
         duration: const Duration(milliseconds: 200),
         child: Icon(
           icon,
-          color: isSelected ? whiteColor : whiteColor.withOpacity(0.5),
+          color: isSelected ? whiteColor : whiteColor,
           size: 24,
         ),
       ),
     );
   }
 }
+
