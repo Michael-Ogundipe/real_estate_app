@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../consts/colors.dart';
+
 class CustomMapMarker {
-  static const markerColor = Color(0xFFFF9800);
+  static const markerColor = orangeColor;
   static const double horizontalPadding = 48;
   static const double verticalPadding = 68;
   static const double borderRadius = 24;
 
   static TextStyle get _textStyle => const TextStyle(
         fontSize: 40,
-        color: Colors.white,
+        color: whiteColor,
         fontWeight: FontWeight.w500,
       );
 

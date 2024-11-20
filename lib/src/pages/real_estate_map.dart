@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:real_estate_app/src/consts/app_style.dart';
 
 import '../consts/colors.dart';
-import '../widgets/custom_map_marker.dart';
+import '../providers/map_markers_provider.dart';
 
 class RealEstateMap extends ConsumerStatefulWidget {
   const RealEstateMap({super.key});
@@ -19,33 +19,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   String selectedView = 'price';
   bool showViewOptions = false;
 
-  final List<PropertyListing> propertyListings = [
-    PropertyListing(
-      id: '1',
-      location: 'Novocherkasskaya',
-      price: '7.8 mn ₽',
-      position: const LatLng(59.9343, 30.3351),
-    ),
-    PropertyListing(
-      id: '2',
-      location: 'Moskovskiy',
-      price: '11 mn ₽',
-      position: const LatLng(59.9315, 30.3240),
-    ),
-  ];
 
-  final markersProvider = FutureProvider<Set<Marker>>((ref) async {
-    final customIcon = await CustomMapMarker.createCustomMarker("11 mn ₽");
-
-    return {
-      Marker(
-        markerId: MarkerId("marker_1"),
-        position: LatLng(59.9343, 30.3351), // Example position
-        icon: customIcon,
-      ),
-      // Add more markers if needed
-    };
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +27,6 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
     return Scaffold(
       body: Stack(
         children: [
-          // GoogleMap(
-          //   initialCameraPosition: const CameraPosition(
-          //     target: LatLng(59.9343, 30.3351),
-          //     zoom: 12,
-          //   ),
-          //   onMapCreated: (GoogleMapController controller) {
-          //     mapController = controller;
-          //     _setMapStyle(controller);
-          //   },
-          //   // markers: _createMarkers(),
-          //   markers: await createMarkers(),
-          // ),
-
           markerAsyncValue.when(
             data: (markers) => GoogleMap(
               initialCameraPosition: const CameraPosition(
@@ -78,8 +39,8 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
               },
               markers: markers,
             ),
-            loading: () => Center(child: CircularProgressIndicator()),
-            error: (err, stack) => Center(child: Text('Error loading markers')),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (err, stack) => const Center(child: Text('Error loading markers')),
           ),
 
           // Search Bar
@@ -250,19 +211,6 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
     );
   }
 
-  Set<Marker> _createMarkers() {
-    return propertyListings.map((listing) {
-      return Marker(
-        markerId: MarkerId(listing.id),
-        position: listing.position,
-        infoWindow: InfoWindow(
-          title: listing.price,
-          snippet: listing.location,
-        ),
-      );
-    }).toSet();
-  }
-
   Future<void> _setMapStyle(GoogleMapController controller) async {
     // Add custom map style JSON here for dark theme
     String style = '''
@@ -282,16 +230,3 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   }
 }
 
-class PropertyListing {
-  final String id;
-  final String location;
-  final String price;
-  final LatLng position;
-
-  PropertyListing({
-    required this.id,
-    required this.location,
-    required this.price,
-    required this.position,
-  });
-}
