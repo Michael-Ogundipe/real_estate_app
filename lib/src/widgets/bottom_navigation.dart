@@ -18,11 +18,11 @@ class HomePageState extends ConsumerState<HomePage> {
   static const List<Widget> _pages = <Widget>[
     RealEstateMap(),
     Center(
-      child: Icon(Icons.call, size: 150),
+      child: Icon(Icons.chat, size: 150),
     ),
     Home(),
     Center(
-      child: Icon(Icons.chat, size: 150),
+      child: Icon(Icons.favorite_border, size: 150),
     ),
     Center(
       child: Icon(Icons.person, size: 150),
@@ -70,7 +70,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation> {
               onTap: () => _onItemTapped(0),
             ),
             NavBarIcon(
-              icon: Icons.chat_bubble,
+              icon: Icons.chat,
               isSelected: ref.watch(selectedIndex) == 1,
               onTap: () => _onItemTapped(1),
             ),

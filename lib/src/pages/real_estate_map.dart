@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:real_estate_app/src/consts/app_style.dart';
 
 import '../consts/colors.dart';
+import '../widgets/custom_map_marker.dart';
 
-class RealEstateMap extends StatefulWidget {
+class RealEstateMap extends ConsumerStatefulWidget {
   const RealEstateMap({super.key});
 
   @override
-  State<RealEstateMap> createState() => _RealEstateMapState();
+  ConsumerState<RealEstateMap> createState() => _RealEstateMapState();
 }
 
-class _RealEstateMapState extends State<RealEstateMap> {
+class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   late GoogleMapController mapController;
   String searchQuery = '';
   String selectedView = 'price';
@@ -32,21 +34,52 @@ class _RealEstateMapState extends State<RealEstateMap> {
     ),
   ];
 
+  final markersProvider = FutureProvider<Set<Marker>>((ref) async {
+    final customIcon = await CustomMapMarker.createCustomMarker("11 mn ₽");
+
+    return {
+      Marker(
+        markerId: MarkerId("marker_1"),
+        position: LatLng(59.9343, 30.3351), // Example position
+        icon: customIcon,
+      ),
+      // Add more markers if needed
+    };
+  });
+
   @override
   Widget build(BuildContext context) {
+    final markerAsyncValue = ref.watch(markersProvider);
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(59.9343, 30.3351),
-              zoom: 12,
+          // GoogleMap(
+          //   initialCameraPosition: const CameraPosition(
+          //     target: LatLng(59.9343, 30.3351),
+          //     zoom: 12,
+          //   ),
+          //   onMapCreated: (GoogleMapController controller) {
+          //     mapController = controller;
+          //     _setMapStyle(controller);
+          //   },
+          //   // markers: _createMarkers(),
+          //   markers: await createMarkers(),
+          // ),
+
+          markerAsyncValue.when(
+            data: (markers) => GoogleMap(
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(59.9343, 30.3351), // Example position
+                zoom: 12,
+              ),
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+                _setMapStyle(controller);
+              },
+              markers: markers,
             ),
-            onMapCreated: (GoogleMapController controller) {
-              mapController = controller;
-              _setMapStyle(controller);
-            },
-            markers: _createMarkers(),
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (err, stack) => Center(child: Text('Error loading markers')),
           ),
 
           // Search Bar
@@ -95,7 +128,6 @@ class _RealEstateMapState extends State<RealEstateMap> {
           // Bottom Navigation
           Positioned(
             bottom: 96,
-
             right: 16,
             child: TextButton(
               onPressed: () {

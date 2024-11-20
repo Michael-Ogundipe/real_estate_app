@@ -5,12 +5,8 @@ import '../consts/colors.dart';
 import '../widgets/listing_card.dart';
 import '../widgets/offer_cards.dart';
 
-
-
 class Home extends StatelessWidget {
-  const Home({
-    super.key,
-  });
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +15,7 @@ class Home extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
-          colors: [
-            lightPeachColor,
-            whiteColor,
-          ],
+          colors: [lightPeachColor, whiteColor],
         ),
       ),
       child: SafeArea(
@@ -67,16 +60,17 @@ class Home extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ).animate().fadeIn(duration: 500.ms,)
-                              .slide(
-                            begin: Offset(-1, 0),
-                            end: Offset(0, 0),
-                            duration: 1000.ms,
-                          ),
+                          ).animate().fadeIn(duration: 500.ms).slide(
+                                begin: Offset(-1, 0),
+                                end: Offset(0, 0),
+                                duration: 1000.ms,
+                              ),
                           const CircleAvatar(
                             radius: 25,
                             child: Icon(Icons.person),
-                          ).animate().fadeIn(duration: 500.ms,) // Fade in effect
+                          )
+                              .animate()
+                              .fadeIn(duration: 500.ms) // Fade in effect
                               .scale(duration: 1500.ms),
                         ],
                       ),
@@ -105,8 +99,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
                   margin: const EdgeInsets.only(bottom: 18),
                   decoration: BoxDecoration(
                       color: whiteColor,
