@@ -23,7 +23,7 @@ class NavBarIcon extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ?  orangeColor
-              :  blackColor,
+              :  blackRaisinColor,
           shape: BoxShape.circle,
         ),
         duration: const Duration(milliseconds: 200),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../consts/app_style.dart';
+import '../consts/assets.dart';
 import '../consts/colors.dart';
 import '../widgets/listing_card.dart';
 import '../widgets/offer_cards.dart';
@@ -101,28 +102,25 @@ class Home extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 18),
                 decoration: BoxDecoration(
                     color: whiteColor, borderRadius: BorderRadius.circular(32)),
-                child: const Column(
+                child:  const Column(
                   children: [
                     ListingCard(
                       address: 'Gladkova St., 25',
-                      imageUrl:
-                          'https://cf.bstatic.com/xdata/images/hotel/max1024x768/543655031.jpg?k=e8edd5b9fde055d0a378f10f04b121ea094d178174717f58ed0554bafa65d312&o=&hp=1',
+                      imageUrl: Assets.image3,
                     ),
                     Row(
                       children: [
                         Expanded(
                           child: ListingCard(
                             address: 'Trefoleva St., 43',
-                            imageUrl:
-                                'https://a0.muscache.com/im/pictures/hosting/Hosting-1105566431715894222/original/a984124c-7503-4454-8f2c-95141789e676.jpeg?im_w=720',
+                            imageUrl: Assets.image2,
                           ),
                         ),
                         SizedBox(width: 8),
                         Expanded(
                           child: ListingCard(
                             address: 'Trefoleva St., 43',
-                            imageUrl:
-                                'https://a0.muscache.com/im/pictures/miso/Hosting-1045027151296604859/original/e0b6a72a-ff8f-4786-abf2-bd6eab2a05d5.jpeg?im_w=720',
+                            imageUrl: Assets.image1,
                           ),
                         ),
                       ],

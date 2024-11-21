@@ -64,7 +64,7 @@ class _BottomNavigationState extends ConsumerState<BottomNavigation> {
         padding: const EdgeInsets.symmetric(vertical: 8),
         margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
         decoration: BoxDecoration(
-          color: darkGrayColor,
+          color: darkCharcoalColor,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Row(

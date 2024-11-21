@@ -97,7 +97,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
                     vertical: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: darkGrayColor.withOpacity(0.6),
+                    color: spanishGrayColor.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -211,7 +211,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return Container(
       decoration: const BoxDecoration(
-        color: darkGrayColor,
+        color: spanishGrayColor,
         shape: BoxShape.circle,
       ),
       child: IconButton(

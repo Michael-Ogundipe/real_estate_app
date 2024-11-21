@@ -54,7 +54,7 @@ class _ListingCardState extends State<ListingCard>
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(24),
-            child: Image.network(
+            child: Image.asset(
               widget.imageUrl,
               fit: BoxFit.cover,
               height: 200,
@@ -71,10 +71,9 @@ class _ListingCardState extends State<ListingCard>
                 color: tanColor.withOpacity(0.9),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: const Center(
-                child: Text(
-                  "Gladkova St., 25",
-                  style: TextStyle(color: darkGrayColor, fontSize: 16),
+              child:  Center(
+                child: Text( widget.address,
+                  style: const TextStyle(color: darkGrayColor, fontSize: 16),
                 ),
               ),
             ),
