@@ -82,14 +82,11 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
               ),
             ),
 
-            // Bottom Navigation
             Positioned(
               bottom: 96,
               right: 16,
               child: TextButton(
-                onPressed: () {
-                  // setState(() => showViewOptions = !showViewOptions);
-                },
+                onPressed: () {},
                 child: Container(
                   width: 190,
                   padding: const EdgeInsets.symmetric(
