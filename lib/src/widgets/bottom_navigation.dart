@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../consts/colors.dart';
@@ -34,7 +35,12 @@ class HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
         extendBody: true,
         body: _pages.elementAt(ref.watch(selectedIndex)),
-        bottomNavigationBar: const BottomNavigation());
+        bottomNavigationBar: const BottomNavigation().animate()
+            .fadeIn(
+          delay: 4500.ms,
+          duration: 1000.ms,
+        )
+            .slideY(begin: 1, end: 0, duration: 1000.ms));
   }
 }
 

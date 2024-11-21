@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:real_estate_app/src/consts/app_style.dart';
 
 import '../consts/colors.dart';
+import '../consts/map_style.dart';
 import '../providers/map_markers_provider.dart';
 
 class RealEstateMap extends ConsumerStatefulWidget {
@@ -23,10 +25,11 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   Widget build(BuildContext context) {
     final markerAsyncValue = ref.watch(markersProvider);
     return Scaffold(
-      body: Stack(
-        children: [
-          markerAsyncValue.when(
-            data: (markers) => GoogleMap(
+      body: markerAsyncValue.when(
+        data: (markers) => Stack(
+          children: [
+            GoogleMap(
+              mapType: MapType.normal,
               initialCameraPosition: const CameraPosition(
                 target: LatLng(59.9343, 30.3351), // Example position
                 zoom: 12,
@@ -37,117 +40,16 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
               },
               markers: markers,
             ),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) =>
-                const Center(child: Text('Error loading markers')),
-          ),
 
-          // Search Bar
-          Positioned(
-            top: 50,
-            left: 16,
-            right: 16,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const SizedBox(width: 16),
-                  const Icon(Icons.search, color: Colors.grey),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Saint Petersburg',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 15),
-                      ),
-                      onChanged: (value) {
-                        setState(() => searchQuery = value);
-                      },
-                    ),
-                  ),
-                  IconButton(icon: const Icon(Icons.layers), onPressed: () {}),
-                ],
-              ),
-            ),
-          ),
-
-          // Bottom Navigation
-          Positioned(
-            bottom: 96,
-            right: 16,
-            child: TextButton(
-              onPressed: () {
-                // setState(() => showViewOptions = !showViewOptions);
-              },
-              child: Container(
-                width: 190,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: darkGrayColor.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.menu_sharp, color: whiteColor),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      'List of variants',
-                      style: AppStyles.font16Medium,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 104,
-            left: 32,
-            right: 16,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        _buildCircleButton(Icons.layers, () {
-                          setState(() => showViewOptions = !showViewOptions);
-                        }),
-                        const SizedBox(height: 8),
-                        _buildCircleButton(Icons.navigation, () {}),
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-
-          // View Options Panel
-          if (showViewOptions)
+            // Search Bar
             Positioned(
-              bottom: 160,
-              left: 32,
+              top: 50,
+              left: 16,
+              right: 16,
               child: Container(
                 decoration: BoxDecoration(
-                  color: tanColor,
-                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
@@ -156,18 +58,127 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
                     ),
                   ],
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    _buildViewOption('Cosy areas', Icons.check_circle_outline),
-                    _buildViewOption('Price', Icons.attach_money),
-                    _buildViewOption('Infrastructure', Icons.location_city),
-                    _buildViewOption('Without any layer', Icons.layers_clear),
+                    const SizedBox(width: 16),
+                    const Icon(Icons.search, color: Colors.grey),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Saint Petersburg',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 15),
+                        ),
+                        onChanged: (value) {
+                          setState(() => searchQuery = value);
+                        },
+                      ),
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.layers), onPressed: () {}),
                   ],
                 ),
               ),
             ),
-        ],
+
+            // Bottom Navigation
+            Positioned(
+              bottom: 96,
+              right: 16,
+              child: TextButton(
+                onPressed: () {
+                  // setState(() => showViewOptions = !showViewOptions);
+                },
+                child: Container(
+                  width: 190,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: darkGrayColor.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.menu_sharp, color: whiteColor),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'List of variants',
+                        style: AppStyles.font16Medium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 104,
+              left: 32,
+              right: 16,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          _buildCircleButton(Icons.layers, () {
+                            setState(() => showViewOptions = !showViewOptions);
+                          }),
+                          const SizedBox(height: 8),
+                          _buildCircleButton(Icons.navigation, () {}),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            // View Options Panel
+            if (showViewOptions)
+              Positioned(
+                bottom: 160,
+                left: 32,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: tanColor,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildViewOption(
+                          'Cosy areas', Icons.check_circle_outline),
+                      _buildViewOption('Price', Icons.attach_money),
+                      _buildViewOption('Infrastructure', Icons.location_city),
+                      _buildViewOption('Without any layer', Icons.layers_clear),
+                    ],
+                  ),
+                ),
+              )
+                  .animate()
+                  .fadeIn(duration: 500.ms)
+                  .slideY(begin: 1.0, end: 0.0, curve: Curves.easeOut),
+          ],
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        error: (err, stack) => const Center(
+          child: Text('Error loading markers'),
+        ),
       ),
     );
   }
@@ -211,20 +222,13 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   }
 
   Future<void> _setMapStyle(GoogleMapController controller) async {
-    // Add custom map style JSON here for dark theme
-    String style = '''
-    [
-      {
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#212121"
-          }
-        ]
-      },
-      // Add more style rules as needed
-    ]
-    ''';
-    await controller.setMapStyle(style);
+    try {
+      await controller.setMapStyle(customMapStyle);
+      print("Custom map style applied.");
+    } catch (e) {
+      print("Error setting map style: $e");
+    }
   }
+
+
 }
