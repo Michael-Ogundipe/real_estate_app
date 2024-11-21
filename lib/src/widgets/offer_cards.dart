@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../consts/app_style.dart';
 import '../consts/colors.dart';
@@ -38,7 +39,13 @@ class OfferCards extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        )
+            .animate()
+            .fadeIn(
+              delay: 2500.ms,
+              duration: 1000.ms,
+            )
+            .scale(duration: 1000.ms),
         const SizedBox(width: 20),
         Expanded(
           child: Container(
@@ -67,7 +74,8 @@ class OfferCards extends StatelessWidget {
                 AnimatedCountingText(
                   begin: 1200,
                   end: 2212,
-                  style: AppStyles.font32Bold.copyWith(color: grayishBrownColor),
+                  style:
+                      AppStyles.font32Bold.copyWith(color: grayishBrownColor),
                 ),
                 Text(
                   'offers',
@@ -78,7 +86,13 @@ class OfferCards extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        )
+            .animate()
+            .fadeIn(
+              delay: 2500.ms,
+              duration: 1000.ms,
+            )
+            .scale(duration: 1000.ms),
       ],
     );
   }

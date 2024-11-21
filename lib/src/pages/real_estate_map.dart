@@ -19,8 +19,6 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   String selectedView = 'price';
   bool showViewOptions = false;
 
-
-
   @override
   Widget build(BuildContext context) {
     final markerAsyncValue = ref.watch(markersProvider);
@@ -40,7 +38,8 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
               markers: markers,
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) => const Center(child: Text('Error loading markers')),
+            error: (err, stack) =>
+                const Center(child: Text('Error loading markers')),
           ),
 
           // Search Bar
@@ -77,10 +76,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
                       },
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.layers),
-                    onPressed: () {},
-                  ),
+                  IconButton(icon: const Icon(Icons.layers), onPressed: () {}),
                 ],
               ),
             ),
@@ -92,7 +88,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
             right: 16,
             child: TextButton(
               onPressed: () {
-                setState(() => showViewOptions = !showViewOptions);
+                // setState(() => showViewOptions = !showViewOptions);
               },
               child: Container(
                 width: 190,
@@ -130,9 +126,11 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
                   children: [
                     Column(
                       children: [
-                        _buildCircleButton(Icons.layers),
+                        _buildCircleButton(Icons.layers, () {
+                          setState(() => showViewOptions = !showViewOptions);
+                        }),
                         const SizedBox(height: 8),
-                        _buildCircleButton(Icons.navigation),
+                        _buildCircleButton(Icons.navigation, () {}),
                       ],
                     ),
                   ],
@@ -177,6 +175,7 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
   Widget _buildViewOption(String title, IconData icon) {
     return InkWell(
       onTap: () {
+        setState(() => showViewOptions = !showViewOptions);
         setState(() => selectedView = title.toLowerCase());
       },
       child: Padding(
@@ -198,15 +197,15 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
     );
   }
 
-  Widget _buildCircleButton(IconData icon) {
+  Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: darkGrayColor,
         shape: BoxShape.circle,
       ),
       child: IconButton(
         icon: Icon(icon, color: Colors.white),
-        onPressed: () {},
+        onPressed: onPressed,
       ),
     );
   }
@@ -229,4 +228,3 @@ class _RealEstateMapState extends ConsumerState<RealEstateMap> {
     await controller.setMapStyle(style);
   }
 }
-
